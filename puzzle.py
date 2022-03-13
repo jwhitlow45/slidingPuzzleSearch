@@ -5,11 +5,13 @@ class Puzzle:
         self.initState = list(initState)
         self.goalState = list(goalState)
         self.size = size
+    
+        
         
     def index_to_coord(self, index: int) -> Tuple[int, int]:
-        return (index/self.size, index%self.size)
+        return (int(index/self.size), index%self.size)
     
-    def coord_to_index(self, col: int, row: int) -> Tuple[int, int]:
+    def coord_to_index(self, col: int, row: int) -> int:
         return row * self.size + col
     
     def print_states(self):  
