@@ -1,0 +1,19 @@
+# macOS Files
+.DS_Store
+._*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+__pypackages__/
+*.pyc
+
+# Environments
+.env
+.venv
+env/
+venv/
+
+# VSCode
+.vscode
