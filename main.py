@@ -1,14 +1,14 @@
+from puzzle import Puzzle
+
 def main():
+    myPuzzle = Puzzle("0123456789ABCDEF", "0123456789ABCDEF", 4)
+    print(myPuzzle.coord_to_index(1, 3))
+    myPuzzle.print_states()
     
-    print_puzzle("0123456789ABCDEF", 4)
 
     pass
 
-def print_puzzle(puzzle: str, size: int):
-    for i, tile in enumerate(puzzle):
-        print(tile, end=' ')
-        if (i - size + 1) % size == 0:
-            print('')    
+  
     
 
 if __name__ == '__main__':
