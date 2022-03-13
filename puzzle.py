@@ -30,7 +30,6 @@ class Puzzle:
         """
         # check if valid move
         if zeroIndex % size == 0:
-            print('WARNING: INVALID MOVE!')
             return (state, zeroIndex)
         # make move
         state = cls.swap_tiles(state, zeroIndex, zeroIndex - 1)
@@ -50,7 +49,6 @@ class Puzzle:
         """
         # check if valid move
         if zeroIndex % size == size - 1:
-            print('WARNING: INVALID MOVE!')
             return (state, zeroIndex)
         # make move
         state = cls.swap_tiles(state, zeroIndex, zeroIndex + 1)
@@ -70,7 +68,6 @@ class Puzzle:
         """
         # check if valid move
         if zeroIndex < size:
-            print('WARNING: INVALID MOVE!')
             return (state, zeroIndex)
         # make move
         state = cls.swap_tiles(state, zeroIndex, zeroIndex - size)
@@ -90,7 +87,6 @@ class Puzzle:
         """
         # check if valid move
         if zeroIndex >= size * (size - 1):
-            print('WARNING: INVALID MOVE!')
             return (state, zeroIndex)
         # make move
         state = cls.swap_tiles(state, zeroIndex, zeroIndex + size)
@@ -108,7 +104,7 @@ class Puzzle:
             zeroIndex (int): index of zero tile, automatically found if not given
 
         Returns:
-            List[str, int]: state after moveset has been performed, index of zero tile
+            Tuple[List[str], int]: state after moveset has been performed, index of zero tile
         """
         state = list(state)
         if zeroIndex < 0:
