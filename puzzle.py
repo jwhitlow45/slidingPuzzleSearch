@@ -97,7 +97,7 @@ class Puzzle:
         zeroIndex += size
         return (state, zeroIndex)
          
-    def move(cls, state: str, moveset: str, size: int, zeroIndex: int = -1) -> List[str, int]:
+    def move(cls, state: str, moveset: str, size: int, zeroIndex: int = -1) -> Tuple[List[str], int]:
         """given a puzzle state, performs moves left, right, up, or down from
         moveset on puzzle and puzzle state after performed moves
 
