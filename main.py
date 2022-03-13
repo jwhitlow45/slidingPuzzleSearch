@@ -1,20 +1,32 @@
 from puzzle import Puzzle
 import algorithms
+from datetime import datetime
 
 def main():
-    initState = "462301587"
+    initState: str
     goalState = "012345678"
-    size = 3
+    size: int
+    puzzles = []
     puz = Puzzle()
     
-    print("Initial state")
-    puz.print_puzzle(initState, size)
-    solution, expands = algorithms.breadth_first_search(initState, goalState, size)
-    print("Solution:", solution)
-    print("Expands", expands)
-    print("Solution tested:")
-    state = puz.move(initState, solution, size)[0]
-    puz.print_puzzle(state, size)
+    with open('puzzles.txt', 'r') as FILE:
+        line = None
+        while line := FILE.readline():
+            puzzles.append(line.strip().split(','))
+            
+    for i in range(len(puzzles)):
+        initState = puzzles[i][0]
+        size = int(puzzles[i][1])
+    
+        print("Initial state:", ''.join(initState))
+        start = datetime.now()
+        solution, expands = algorithms.iterative_deepening_search(initState, goalState, size)
+        print("Solution:", solution)
+        print("Expands", expands)
+        state = puz.move(initState, solution, size)[0]
+        print("Solution tested:", ''.join(state))
+        print("Time:", datetime.now() - start)
+        print()
 
     pass
 
