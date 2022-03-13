@@ -26,7 +26,30 @@ def breadth_first_search(initState: str, goalState: str, size: int) -> Tuple[str
         queue += expand(stateTuple, size)
         numExpansions += 1
         
+def depth_first_search(initState: str, goalState: str, size: int) -> Tuple[str, int]:
+    numExpansions = 0
+    zeroIndex = initState.index('0')
+    initState = list(initState)
+    goalState = list(goalState)
+    
+    queue = [(initState, zeroIndex, "")]
+    visited = {}
+    
+    while len(queue) > 0:
+        stateTuple = queue.pop(-1)
+        state, zeroIndex, moves = stateTuple
         
+        if ''.join(state) in visited:
+            continue
+        visited[''.join(state)] = 1
+        
+        # check if we have found solution
+        if state == goalState:
+            return (moves, numExpansions)
+        
+        # expand and add possible solutions to back of queue
+        queue += expand(stateTuple, size)
+        numExpansions += 1   
     
 def expand(stateTuple: Tuple[str, int, str], size: int) -> List[Tuple[str, int, str]]:
     # unpack for legibility
