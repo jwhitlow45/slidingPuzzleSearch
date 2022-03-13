@@ -6,7 +6,17 @@ class Puzzle:
         self.goalState = list(goalState)
         self.size = size
     
-    def swap_tiles(cls, state: List[str], pos0: int, pos1: int):
+    def swap_tiles(cls, state: List[str], pos0: int, pos1: int) -> List[int]:
+        """swaps two tiles in a puzzle
+
+        Args:
+            state (List[str]): given puzzle state
+            pos0 (int): pos of tile0 to swap
+            pos1 (int): pos of tile1 to swap
+
+        Returns:
+            List[int]: resultant puzzle state from swapping of tiles at pos0 and pos1
+        """
         temp = state[pos0]
         state[pos0] = state[pos1]
         state[pos1] = temp
