@@ -8,10 +8,16 @@ def breadth_first_search(initState: str, goalState: str, size: int) -> Tuple[str
     goalState = list(goalState)
     
     queue = [(initState, zeroIndex, "")]
+    visited = {}
     
     while len(queue) > 0:
         stateTuple = queue.pop(0)
         state, zeroIndex, moves = stateTuple
+        
+        if ''.join(state) in visited:
+            continue
+        visited[''.join(state)] = 1
+        
         # check if we have found solution
         if state == goalState:
             return (moves, numExpansions)
