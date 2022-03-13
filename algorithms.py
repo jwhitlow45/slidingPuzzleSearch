@@ -32,11 +32,11 @@ def depth_first_search(initState: str, goalState: str, size: int) -> Tuple[str, 
     initState = list(initState)
     goalState = list(goalState)
     
-    queue = [(initState, zeroIndex, "")]
+    stack = [(initState, zeroIndex, "")]
     visited = {}
     
-    while len(queue) > 0:
-        stateTuple = queue.pop(-1)
+    while len(stack) > 0:
+        stateTuple = stack.pop(-1)
         state, zeroIndex, moves = stateTuple
         
         if ''.join(state) in visited:
@@ -47,8 +47,47 @@ def depth_first_search(initState: str, goalState: str, size: int) -> Tuple[str, 
         if state == goalState:
             return (moves, numExpansions)
         
-        # expand and add possible solutions to back of queue
-        queue += expand(stateTuple, size)
+        # expand and add possible solutions to top of stack
+        stack += expand(stateTuple, size)
+        numExpansions += 1
+        
+def iterative_deepening_search(initState: str, goalState: str, size: int) -> Tuple[str, int]:
+    numExpansions = 0
+    zeroIndex = initState.index('0')
+    initState = list(initState)
+    goalState = list(goalState)
+    depthLimit = 5
+    
+    stack = [[0, initState, zeroIndex, ""]]
+    visited = {}
+    
+    while len(stack) > 0:
+        depth, state, z, moves = stack.pop()
+        # print(depth, state, z, moves)
+        # if len(stack) > 100:
+        #     break
+        
+        # check if solution has already been explored
+        if ''.join(state) in visited:
+            continue
+        visited[''.join(state)] = 1
+        
+        # check if we have found solution
+        if state == goalState:
+            return (moves, numExpansions)
+        
+        # expand and add possible solutions to top of stack if less than depth limit
+        # add to bottom of stack if greater than depth limit so that all states
+        # which have not hit depth limit are evaluated first
+        for newState in expand((state, z, moves), size):
+            if depth + 1 < depthLimit:
+                newState = [depth + 1] + list(newState)
+                stack += [newState]
+            else:
+                newState = [0] + list(newState)
+                stack = [newState] + stack
+                
+        # track number of expansions
         numExpansions += 1   
     
 def expand(stateTuple: Tuple[str, int, str], size: int) -> List[Tuple[str, int, str]]:
@@ -57,21 +96,8 @@ def expand(stateTuple: Tuple[str, int, str], size: int) -> List[Tuple[str, int, 
     
     possibleMoves = ['l','r','u','d']
     
-    oppMoves = {'l':'r',
-                'r':'l',
-                'u':'d',
-                'd':'u'}
-    
-    if moves:
-        possibleMoves.remove(oppMoves[moves[-1]])
-    
     newStateTuples = []
     expPuzzle = Puzzle()
-    
-    # print('expansion')
-    # expPuzzle.print_puzzle(state, size)
-    # print()
-    
     
     for move in possibleMoves:
         newState, newZeroIndex = expPuzzle.move(state=state,
