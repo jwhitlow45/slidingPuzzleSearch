@@ -5,8 +5,8 @@ def main():
     pass
 
 def print_puzzle(puzzle: str, size: int):
-    for i in range(len(puzzle)):
-        print(puzzle[i], end=' ')
+    for i, tile in enumerate(puzzle):
+        print(tile, end=' ')
         if (i - size + 1) % size == 0:
             print('')    
     
