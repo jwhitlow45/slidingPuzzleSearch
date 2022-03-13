@@ -1,11 +1,6 @@
 from typing import Tuple, List
 
 class Puzzle:
-    def __init__(self, initState: str, goalState: str, size: int):
-        self.initState = list(initState)
-        self.goalState = list(goalState)
-        self.size = size
-    
     def swap_tiles(cls, state: List[str], pos0: int, pos1: int) -> List[int]:
         """swaps two tiles in a puzzle
 
@@ -102,7 +97,7 @@ class Puzzle:
         zeroIndex += size
         return (state, zeroIndex)
          
-    def move(cls, state: str, moveset: str, size: int) -> List[str]:
+    def move(cls, state: str, moveset: str, size: int, zeroIndex: int = -1) -> List[str, int]:
         """given a puzzle state, performs moves left, right, up, or down from
         moveset on puzzle and puzzle state after performed moves
 
@@ -110,12 +105,14 @@ class Puzzle:
             state (str): puzzle state to manipulate
             moveset (str): moves to perform on puzzle state, l, r, u, or d
             size (int): size of puzzle
+            zeroIndex (int): index of zero tile, automatically found if not given
 
         Returns:
-            List[str]: state after moveset has been performed
+            List[str, int]: state after moveset has been performed, index of zero tile
         """
         state = list(state)
-        zeroIndex = state.index('0')
+        if zeroIndex < 0:
+            zeroIndex = state.index('0')
         for move in moveset:
             # cls.print_puzzle(state, size)
             # print()
@@ -136,16 +133,10 @@ class Puzzle:
                     continue
         # cls.print_puzzle(state, size)
             
-        return state
+        return (state, zeroIndex)
     
     def print_puzzle(cls, puzzle: List[str], size: int):
         for i, tile in enumerate(puzzle):
             print(tile, end=' ')
             if (i - size + 1) % size == 0:
                 print('')
-                
-    def print_states(self):  
-        print('Init state:')
-        Puzzle.print_puzzle(Puzzle, self.initState, self.size)
-        print('Goal state:')
-        Puzzle.print_puzzle(Puzzle, self.goalState, self.size)
