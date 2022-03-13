@@ -12,7 +12,7 @@ class Puzzle:
         state[pos1] = temp
         return state
     
-    def __moveLeft(cls, state: List[str], zeroIndex: int, size: int) -> Tuple[List[str], int]:
+    def moveLeft(cls, state: List[str], zeroIndex: int, size: int) -> Tuple[List[str], int]:
         """move 0 tile (empty tile) left one space
 
         Args:
@@ -32,7 +32,7 @@ class Puzzle:
         zeroIndex -= 1
         return (state, zeroIndex)
 
-    def __moveRight(cls, state: List[str], zeroIndex: int, size: int) -> Tuple[List[str], int]:
+    def moveRight(cls, state: List[str], zeroIndex: int, size: int) -> Tuple[List[str], int]:
         """move 0 tile (empty tile) right one space
 
         Args:
@@ -52,7 +52,7 @@ class Puzzle:
         zeroIndex += 1
         return (state, zeroIndex)
 
-    def __moveUp(cls, state: List[str], zeroIndex: int, size: int) -> Tuple[List[str], int]:
+    def moveUp(cls, state: List[str], zeroIndex: int, size: int) -> Tuple[List[str], int]:
         """move 0 tile (empty tile) up one space
 
         Args:
@@ -72,7 +72,7 @@ class Puzzle:
         zeroIndex -= size
         return (state, zeroIndex)
     
-    def __moveDown(cls, state: List[str], zeroIndex: int, size: int) -> Tuple[List[str], int]:
+    def moveDown(cls, state: List[str], zeroIndex: int, size: int) -> Tuple[List[str], int]:
         """move 0 tile (empty tile) down one space
 
         Args:
@@ -113,16 +113,16 @@ class Puzzle:
             
             match move:
                 case 'l':
-                    state, zeroIndex = cls.__moveLeft(state, zeroIndex, size)
+                    state, zeroIndex = cls.moveLeft(state, zeroIndex, size)
                     continue
                 case 'r':
-                    state, zeroIndex = cls.__moveRight(state, zeroIndex, size)
+                    state, zeroIndex = cls.moveRight(state, zeroIndex, size)
                     continue
                 case 'u':
-                    state, zeroIndex = cls.__moveUp(state, zeroIndex, size)
+                    state, zeroIndex = cls.moveUp(state, zeroIndex, size)
                     continue
                 case 'd':
-                    state, zeroIndex = cls.__moveDown(state, zeroIndex, size)
+                    state, zeroIndex = cls.moveDown(state, zeroIndex, size)
                     continue
         # cls.print_puzzle(state, size)
             
