@@ -122,4 +122,18 @@ def expand(stateTuple: Tuple[str, int, str], size: int) -> List[Tuple[str, int, 
     return newStateTuples
         
     
-    
+def num_out_of_place(state: str, goalState: str) -> int:
+    outOfPlaceCount = 0
+    for i, j in zip(state, goalState):
+        if i != j:
+            outOfPlaceCount += 1
+            
+    return outOfPlaceCount
+
+def manhattan_distance(state: str, goalStateDict: dict, size: int) -> int:
+    totalManhattanDist = 0
+    for i, tile in enumerate(state):
+        goalIndex = goalStateDict[tile]
+        totalManhattanDist += abs(i % size - goalIndex % size)
+        totalManhattanDist += abs(int(i / size) - int(goalIndex / size))
+    return totalManhattanDist
