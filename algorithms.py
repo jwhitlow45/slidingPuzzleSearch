@@ -56,7 +56,7 @@ def iterative_deepening_search(initState: str, goalState: str, size: int) -> Tup
     zeroIndex = initState.index('0')
     initState = list(initState)
     goalState = list(goalState)
-    depthLimit = 5
+    depthLimit = 10
     
     stack = [[0, initState, zeroIndex, ""]]
     visited = {}
@@ -94,7 +94,19 @@ def expand(stateTuple: Tuple[str, int, str], size: int) -> List[Tuple[str, int, 
     # unpack for legibility
     state, zeroIndex, moves = stateTuple
     
-    possibleMoves = ['l','r','u','d']
+    possibleMoves = ['l','u','r','d']
+    
+    oppMoves = {
+        'l':'r',
+        'r':'l',
+        'u':'d',
+        'd':'u'
+    }
+    
+    # don't expand on opposite of last move as it is a waste of space and will
+    # immediately be rejected as a prior state
+    if moves:
+        possibleMoves.remove(oppMoves[moves[-1]])
     
     newStateTuples = []
     expPuzzle = Puzzle()
