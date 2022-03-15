@@ -18,7 +18,6 @@ def main():
     for i in range(len(puzzles)):
         initState = puzzles[i][0]
         size = int(puzzles[i][1])
-        print(initState, size)
     
         print("Initial state:", ''.join(initState))
         start = datetime.now()
