@@ -1,7 +1,8 @@
 from typing import List, Tuple
 from puzzle import Puzzle
+from queue import PriorityQueue
 
-EXPANSION_LIMIT = 500000
+EXPANSION_LIMIT = 2000000
 
 def breadth_first_search(initState: str, goalState: str, size: int) -> Tuple[str, int]:
     numExpansions = 0
@@ -64,7 +65,7 @@ def iterative_deepening_search(initState: str, goalState: str, size: int) -> Tup
     zeroIndex = initState.index('0')
     initState = list(initState)
     goalState = list(goalState)
-    depthLimit = 5
+    depthLimit = 2
     
     stack = [[0, initState, zeroIndex, ""]]
     visited = {}
@@ -100,7 +101,49 @@ def iterative_deepening_search(initState: str, goalState: str, size: int) -> Tup
                 
         # track number of expansions
         numExpansions += 1   
+
+def a_star_search(initState: str, goalState: str, size: int) -> Tuple[str, int]:
+    numExpansions = 0
+    zeroIndex = initState.index('0')
+    initState = list(initState)
+    goalState = list(goalState)
+
+    # dictionary representing goal state, provides O(1) lookup time for computing manhattan distance
+    # this is not strictly necessary but it does save a lot of time iterating over indicies
+    goalStateDict = {}
+    for i, tile in enumerate(goalState):
+        goalStateDict[tile] = i
+        
+    # priority queue contains following tuple structure
+    # (estimated cost [g(n)+h(n)], path cost, state, 0 index, moves)
+    pq = PriorityQueue()
+    pq.put((0, 0, initState, zeroIndex, ""))
+    visited = {}
     
+    while pq.qsize() > 0:
+        if numExpansions > EXPANSION_LIMIT:
+            return (f'Exceeded limit of {EXPANSION_LIMIT} expansions', numExpansions)
+        
+        # in this implementation of a*, depth = path cost because has a cost of
+        # 1 since it is adding one step (l,r,u,d) to the final solution
+        _, depth, state, z, moves = pq.get()
+        
+        if ''.join(state) in visited:
+            continue
+        visited[''.join(state)] = 1
+        
+        # check if we have found solution
+        if state == goalState:
+            return (moves, numExpansions)
+        
+        # expand and add possible solutions to pq
+        for newStateTuple in expand((state, z, moves), size):
+            newState, newZ, newMoves = newStateTuple
+            heuristic = manhattan_distance(newState, goalStateDict, size)
+            # heuristic = num_out_of_place(newState, goalState, size)
+            pq.put((depth + 1 + heuristic, depth + 1, newState, newZ, newMoves))
+        numExpansions += 1
+
 def expand(stateTuple: Tuple[str, int, str], size: int) -> List[Tuple[str, int, str]]:
     # unpack for legibility
     state, zeroIndex, moves = stateTuple
