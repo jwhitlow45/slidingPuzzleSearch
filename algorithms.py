@@ -139,8 +139,8 @@ def a_star_search(initState: str, goalState: str, size: int) -> Tuple[str, int]:
         # expand and add possible solutions to pq
         for newStateTuple in expand((state, z, moves), size):
             newState, newZ, newMoves = newStateTuple
-            heuristic = manhattan_distance(newState, goalStateDict, size)
-            # heuristic = num_out_of_place(newState, goalState, size)
+            # heuristic = manhattan_distance(newState, goalStateDict, size)
+            heuristic = out_of_place(newState, goalState)
             pq.put((depth + 1 + heuristic, depth + 1, newState, newZ, newMoves))
         numExpansions += 1
 
@@ -175,8 +175,7 @@ def expand(stateTuple: Tuple[str, int, str], size: int) -> List[Tuple[str, int, 
         
     return newStateTuples
         
-    
-def num_out_of_place(state: str, goalState: str) -> int:
+def out_of_place(state: str, goalState: str) -> int:
     outOfPlaceCount = 0
     for i, j in zip(state, goalState):
         if i != j:
