@@ -3,14 +3,15 @@ import algorithms
 from datetime import datetime
 
 def main():
-    goalState = "123456789ABCDEF0"
+    goalState: str
     puzzles = []
     puz = Puzzle()
     
-    # puzzles3.txt, puzzles4e.txt (easy), puzzles4h.txt (hard)
+    # puzzles3.txt (3x3), puzzles4e.txt (4x4 easy), puzzles4h.txt (4x4 hard)
     fileName = "puzzles4e.txt"
     
     with open(fileName, 'r') as FILE:
+        goalState = FILE.readline()[:-1]
         line = None
         while line := FILE.readline():
             puzzles.append(line.strip().split(','))
@@ -21,13 +22,12 @@ def main():
     
         print("Initial state:", ''.join(initState))
         start = datetime.now()
-        solution, expands = algorithms.breadth_first_search(initState, goalState, size)
+        solution, expands = algorithms.a_star_search(initState, goalState, size)
         print("Solution:", solution)
         print("Expands:", expands)
         state = puz.move(initState, solution, size)[0]
         print("Solution tested:", ''.join(state))
-        print("Time:", datetime.now() - start)
-        print()
+        print("Time:", datetime.now() - start, end='\n\n')
     
     pass
 
