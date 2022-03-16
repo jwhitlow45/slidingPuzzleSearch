@@ -1,6 +1,8 @@
 from typing import List, Tuple
 from puzzle import Puzzle
 
+EXPANSION_LIMIT = 500000
+
 def breadth_first_search(initState: str, goalState: str, size: int) -> Tuple[str, int]:
     numExpansions = 0
     zeroIndex = initState.index('0')
@@ -11,6 +13,9 @@ def breadth_first_search(initState: str, goalState: str, size: int) -> Tuple[str
     visited = {}
     
     while len(queue) > 0:
+        if numExpansions > EXPANSION_LIMIT:
+            return (f'exceeded limit of {EXPANSION_LIMIT} expansions', numExpansions)
+        
         stateTuple = queue.pop(0)
         state, zeroIndex, moves = stateTuple
         
@@ -36,6 +41,9 @@ def depth_first_search(initState: str, goalState: str, size: int) -> Tuple[str, 
     visited = {}
     
     while len(stack) > 0:
+        if numExpansions > EXPANSION_LIMIT:
+            return (f'exceeded limit of {EXPANSION_LIMIT} expansions', numExpansions)
+        
         stateTuple = stack.pop(-1)
         state, zeroIndex, moves = stateTuple
         
@@ -56,12 +64,15 @@ def iterative_deepening_search(initState: str, goalState: str, size: int) -> Tup
     zeroIndex = initState.index('0')
     initState = list(initState)
     goalState = list(goalState)
-    depthLimit = 10
+    depthLimit = 5
     
     stack = [[0, initState, zeroIndex, ""]]
     visited = {}
     
     while len(stack) > 0:
+        if numExpansions > EXPANSION_LIMIT:
+            return (f'exceeded limit of {EXPANSION_LIMIT} expansions', numExpansions)
+        
         depth, state, z, moves = stack.pop()
         # print(depth, state, z, moves)
         # if len(stack) > 100:
