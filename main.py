@@ -8,12 +8,13 @@ def main():
     puz = Puzzle()
     
     # puzzles3.txt (3x3), puzzles4e.txt (4x4 easy), puzzles4h.txt (4x4 hard)
-    fileName = "puzzles4e.txt"
+    fileName = "puzzles4h.txt"
     
     with open(fileName, 'r') as FILE:
         goalState = FILE.readline()[:-1]
-        line = None
         while line := FILE.readline():
+            if line[0] == '#':
+                continue
             puzzles.append(line.strip().split(','))
             
     for i in range(len(puzzles)):
