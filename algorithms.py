@@ -2,7 +2,7 @@ from typing import List, Tuple
 from puzzle import Puzzle
 from queue import PriorityQueue
 
-EXPANSION_LIMIT = 3000000
+EXPANSION_LIMIT = 2000000
 
 def breadth_first_search(initState: str, goalState: str, size: int) -> Tuple[str, int]:
     numExpansions = 0

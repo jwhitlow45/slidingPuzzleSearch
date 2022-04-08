@@ -17,3 +17,6 @@ venv/
 
 # VSCode
 .vscode
+
+# Result files
+*.csv
