@@ -1,5 +1,6 @@
 from typing import Tuple, List
 
+
 class Puzzle:
     def swap_tiles(cls, state: List[str], pos0: int, pos1: int) -> List[int]:
         """swaps two tiles in a puzzle
@@ -16,7 +17,7 @@ class Puzzle:
         state[pos0] = state[pos1]
         state[pos1] = temp
         return state
-    
+
     def moveLeft(cls, state: List[str], zeroIndex: int, size: int) -> Tuple[List[str], int]:
         """move 0 tile (empty tile) left one space
 
@@ -73,7 +74,7 @@ class Puzzle:
         state = cls.swap_tiles(state, zeroIndex, zeroIndex - size)
         zeroIndex -= size
         return (state, zeroIndex)
-    
+
     def moveDown(cls, state: List[str], zeroIndex: int, size: int) -> Tuple[List[str], int]:
         """move 0 tile (empty tile) down one space
 
@@ -92,7 +93,7 @@ class Puzzle:
         state = cls.swap_tiles(state, zeroIndex, zeroIndex + size)
         zeroIndex += size
         return (state, zeroIndex)
-         
+
     def move(cls, state: str, moveset: str, size: int, zeroIndex: int = -1) -> Tuple[List[str], int]:
         """given a puzzle state, performs moves left, right, up, or down from
         moveset on puzzle and puzzle state after performed moves
@@ -113,7 +114,7 @@ class Puzzle:
             # cls.print_puzzle(state, size)
             # print()
             # print(move)
-            
+
             match move:
                 case 'l':
                     state, zeroIndex = cls.moveLeft(state, zeroIndex, size)
@@ -128,9 +129,9 @@ class Puzzle:
                     state, zeroIndex = cls.moveDown(state, zeroIndex, size)
                     continue
         # cls.print_puzzle(state, size)
-            
+
         return (state, zeroIndex)
-    
+
     def print_puzzle(cls, puzzle: List[str], size: int):
         for i, tile in enumerate(puzzle):
             print(tile, end=' ')

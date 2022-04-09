@@ -11,9 +11,6 @@ ALGO_NAME = {
 }
 
 ALGOS = [
-    algorithms.breadth_first_search,
-    algorithms.depth_first_search,
-    algorithms.iterative_deepening_search,
     algorithms.a_star_search,
     algorithms.a_star_search_iterative
 ]
@@ -30,11 +27,11 @@ RESULT_FOLDER = 'results/'
 def main():
     for puzzleAlgo in ALGOS:
         for fileName in PUZ_FILES:
-        
+
             goalState: str
             puzzles = []
             puz = Puzzle()
-            
+
             with open(fileName, 'r') as FILE:
                 goalState = FILE.readline()[:-1]
                 while line := FILE.readline():
